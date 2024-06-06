@@ -1,0 +1,155 @@
+<body>
+  <div class="income-tracker" [ngClass]="{ 'dark-mode': isDarkMode, 'large-text': isLargeText }">
+    <header class="header">
+      <h1>FINANCIAL MANAGEMENT</h1>
+      <div class="header-buttons">
+        <a class="back-button" onclick="window.history.back();"><span>&larr; Back</span></a>
+      </div>
+    </header>
+
+    <div class="total-income-box">
+      <span
+        >Total Income: <span class="total-income-value">£{{ totalIncome.toFixed(2) }}</span></span
+      >
+      <button class="clear-data-button" (click)="clearData()">&#10005;</button>
+    </div>
+
+    <div class="container">
+      <div class="left-container">
+        <h2>Add Income:</h2>
+        <form id="incomeForm" (submit)="addIncome($event, incomeName.value, incomeAmount.value, incomeDate.value)">
+          <div class="form-group">
+            <input type="text" id="incomeName" name="incomeName" #incomeName placeholder="Income name..." required />
+          </div>
+          <div class="form-group">
+            <input
+              type="number"
+              id="incomeAmount"
+              name="incomeAmount"
+              #incomeAmount
+              min="0"
+              step="0.01"
+              placeholder="Income amount..."
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input type="date" id="incomeDate" name="incomeDate" #incomeDate placeholder="Income date..." required />
+          </div>
+
+          <button type="submit">Add Income</button>
+        </form>
+        <div class="import-file">
+          <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".json" style="display: none" />
+          <button (click)="openFileInput()">Import File</button>
+          <span [ngClass]="{ 'no-file': !fileImported, 'file-imported': fileImported }">
+            {{ fileImported ? 'File Imported' : 'No File Selected' }}
+          </span>
+          <button class="remove-file-button" *ngIf="fileImported" (click)="removeImportedFile()">&times;</button>
+        </div>
+      </div>
+
+      <div class="right-container">
+        <h2>Income List:</h2>
+        <div class="search-bar">
+          <input type="text" [(ngModel)]="searchText" placeholder="Search income..." />
+          <button (click)="searchIncome()">Search</button>
+          <button (click)="clearSearch()">Clear</button>
+
+          <div class="sort-dropdown">
+            <button (click)="toggleSortDropdown()">{{ selectedSortOption }}</button>
+            <div class="sort-options" *ngIf="showSortDropdown">
+              <div (click)="sortIncome('newest')">Newest - Oldest</div>
+              <div (click)="sortIncome('oldest')">Oldest - Newest</div>
+              <div (click)="sortIncome('amount-desc')">Amount (Desc)</div>
+              <div (click)="sortIncome('amount-asc')">Amount (Asc)</div>
+              <div (click)="sortIncome('name')">Name (A-Z)</div>
+              <div (click)="clearSorting()">Clear</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="income-list">
+          <div class="income-box" *ngFor="let income of filteredIncome; let i = index">
+            <span class="income-name">{{ income.name }}</span>
+            <span class="income-details">
+              <span class="income-amount">£{{ income.amount.toFixed(2) }}</span>
+              <span class="income-date">{{ income.date }}</span>
+            </span>
+            <button class="remove-button" (click)="removeIncome(i)">X</button>
+          </div>
+        </div>
+
+        <div class="button-container">
+          <div class="dropdown">
+            <button class="dropbtn">Save Report</button>
+            <div class="dropdown-content">
+              <a (click)="saveReport('json')">JSON</a>
+              <a (click)="saveReport('pdf')">PDF</a>
+            </div>
+          </div>
+          <button class="view-graph-button" (click)="scrollToGraph()">View Graphs</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" *ngIf="showSaveModal">
+      <div class="modal-background" (click)="showSaveModal = false"></div>
+      <div class="modal-content">
+        <div class="box">
+          <p>Do you want to include the database ID in the JSON file?</p>
+          <button class="button is-primary" (click)="saveJsonFile(true)">Yes</button>
+          <button class="button" (click)="saveJsonFile(false)">No</button>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close" (click)="showSaveModal = false"></button>
+    </div>
+
+    <div id="incomeTracker" class="statistics-section">
+      <h1>INCOME STATISTICS</h1>
+
+      <div class="chart-wrapper">
+        <div class="chart-header">
+          <h2>Bar Chart</h2>
+          <button (click)="toggleBarChartVisibility()">{{ barChartVisible ? 'Hide' : 'Show' }} Chart</button>
+        </div>
+      </div>
+      <div class="barChartContainer" *ngIf="barChartVisible">
+        <canvas
+          baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          type="bar"
+        >
+        </canvas>
+        <div class="description">
+          This is a bar chart which is made up of data inputted by the user. On the y axis is the income amount and on the x axis is the
+          source of each income.
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <div class="chart-header">
+          <h2>Pie Chart</h2>
+          <button (click)="togglePieChartVisibility()">{{ pieChartVisible ? 'Hide' : 'Show' }} Chart</button>
+        </div>
+      </div>
+      <div class="pieChartContainer" *ngIf="pieChartVisible">
+        <canvas
+          baseChart
+          [datasets]="pieChartData"
+          [labels]="pieChartLabels"
+          [options]="pieChartOptions"
+          [legend]="pieChartLegend"
+          type="pie"
+        >
+        </canvas>
+        <div class="description">
+          This is a pie chart which is made up of data inputted by the user. The pie chart totals the amount earned in each month.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

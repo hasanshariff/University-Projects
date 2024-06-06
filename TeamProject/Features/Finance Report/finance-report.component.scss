@@ -1,0 +1,756 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f8f0;
+  min-height: 100vh;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+.header {
+  background-color: #f0f8f0;
+  color: #333;
+  text-align: center;
+  padding: 10px 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: relative;
+  width: 100%;
+  font-size: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.header-content {
+  font-size: 50px;
+  font-weight: bold;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  vertical-align: top;
+}
+
+.toggle-button {
+  margin-right: 10px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  order: 2;
+}
+
+.back-button {
+  text-decoration: none;
+  background-color: #006400;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 20px;
+  transition: background-color 0.3s, color 0.3s;
+  border: none;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  order: 1;
+}
+
+.back-button:hover {
+  background-color: #6b6c6c;
+  color: #fff;
+}
+
+.finance-report {
+  &.large-text {
+    font-size: 1.5em;
+
+    .header {
+      h1 {
+        font-size: 1.5em;
+      }
+    }
+
+    .finance-report-box {
+      span {
+        font-size: 1.5em;
+      }
+    }
+
+    .result-container {
+      .result-label {
+        font-size: 1.5em;
+      }
+
+      .result-value {
+        font-size: 1.5em;
+      }
+    }
+
+    .button-container {
+      .import-button {
+        font-size: 1.5em;
+      }
+
+      .view-graph-button,
+      .view-statistics-button {
+        font-size: 1.5em;
+      }
+    }
+
+    .statistics {
+      h2 {
+        font-size: 1.5em;
+      }
+
+      .income-item,
+      .expense-item {
+        font-size: 1.5em;
+      }
+    }
+
+    // Increase button sizes
+    button {
+      font-size: 1.2em;
+      padding: 12px 24px;
+    }
+
+    //.back-button {
+    //  font-size: 1.2em;
+    //  padding: 40px 88px;
+    //  min-width: 140px;
+    //}
+
+    .text-size-toggle {
+      font-size: 1.2em;
+      width: 48px;
+      height: 48px;
+      background-color: darkgreen;
+      border-radius: 8px;
+      margin-right: 10px;
+      order: 2;
+    }
+
+    .regenerate-icon {
+      font-size: 1.2em;
+      width: 28px;
+      height: 28px;
+    }
+
+    .import-button {
+      font-size: 1.2em;
+      padding: 24px 60px;
+    }
+
+    .view-graph-button,
+    .view-statistics-button {
+      font-size: 1.2em;
+      padding: 36px 72px;
+    }
+
+    .save-button-container {
+      font-size: 1.2em;
+      padding: 12px 24px;
+    }
+  }
+}
+
+.text-size-toggle {
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  order: 2;
+
+  &:hover {
+    background-color: #6b6c6c;
+  }
+}
+
+.finance-report-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.finance-report-box span {
+  font-size: 26px;
+  width: 90%;
+}
+
+.content {
+  max-width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+h2 {
+  font-weight: bold;
+}
+
+input[type='file'] {
+  margin-bottom: 10px;
+}
+
+.result-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.result-box {
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  flex-basis: calc(33.33% - 10px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  margin-left: 25px;
+}
+
+.result-item {
+  margin-bottom: 10px;
+}
+
+.result-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.income-value {
+  font-weight: bold;
+  color: green;
+}
+
+.expense-value {
+  font-weight: bold;
+  color: red;
+}
+
+.result-value {
+  color: #333;
+  margin-left: 10px;
+
+  &.positive {
+    color: green;
+  }
+
+  &.negative {
+    color: red;
+  }
+}
+
+.chart-container {
+  width: 100%;
+  height: 450px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.statistics {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.left-container,
+.right-container {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.left-container {
+  margin-right: 20px;
+}
+
+.income-item,
+.expense-item {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-details {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.income-name,
+.income-amount {
+  color: green;
+}
+
+.expense-name,
+.expense-amount {
+  color: red;
+}
+
+.income-date,
+.expense-date {
+  font-size: 12px;
+  color: #777;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+  margin-top: 60px;
+}
+
+.import-button {
+  background-color: darkgreen;
+  color: white;
+  padding: 20px 50px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  font-size: 30px;
+}
+
+.import-button span {
+  display: block;
+}
+
+.view-graph-button {
+  background-color: darkgreen;
+  color: white;
+  padding: 30px 60px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 10px;
+  display: inline-block;
+  font-size: 30px;
+  position: relative;
+}
+
+.view-statistics-button {
+  background-color: darkgreen;
+  color: white;
+  padding: 30px 60px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 10px;
+  display: inline-block;
+  font-size: 30px;
+  position: relative;
+}
+
+.view-statistics-button:hover {
+  background-color: #6b6c6c;
+  color: #fff;
+}
+
+.save-button-container {
+  background-color: #006400;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.import-button:hover {
+  background-color: #6b6c6c;
+  color: #fff;
+}
+
+.import-button::after {
+  content: '';
+  display: none;
+  width: 10px;
+  height: 10px;
+  background-color: mediumseagreen;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.import-button.file-uploaded::after {
+  display: block;
+}
+
+.view-graph-button:hover {
+  background-color: #6b6c6c;
+  color: #fff;
+}
+
+.import-button input[type='file'] {
+  display: none;
+}
+
+.regenerate-icon {
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.toggle-button {
+  position: relative;
+  right: 0;
+  transform: none;
+  order: 1;
+}
+.sort-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+  float: right;
+}
+
+.sort-dropdown button {
+  background-color: #006400;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px; /* Adjust the border-radius to make the button oval-shaped */
+  cursor: pointer;
+}
+
+.sort-options {
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0;
+  border-radius: 10px; /* Add border-radius to the options container */
+}
+
+.sort-options div {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.sort-options div:hover {
+  background-color: #f1f1f1;
+}
+
+/* Positioning the sort by button */
+.left-container h2,
+.right-container h2 {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.left-container .sort-dropdown,
+.right-container .sort-dropdown {
+  margin-left: auto;
+}
+
+label[for='darkmode-toggle'] {
+  width: 120px;
+  height: 50px;
+  position: relative;
+  display: block;
+  background: #ebebeb;
+  border-radius: 30px;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+  transition: 0.3s;
+  margin-left: 20px;
+}
+
+label[for='darkmode-toggle']:after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: linear-gradient(180deg, lightgreen, darkgreen);
+  border-radius: 30px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+#darkmode-toggle {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+#darkmode-toggle:checked + label {
+  background: #242424;
+}
+
+#darkmode-toggle:checked + label:after {
+  left: 115px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+
+label[for='darkmode-toggle']:active:after {
+  width: 60px;
+}
+
+label[for='darkmode-toggle']:hover {
+  cursor: pointer;
+  background: #d0d0d0;
+}
+
+.import-button:disabled,
+.view-graph-button:disabled {
+  background-color: #ccc;
+  color: #888;
+  cursor: not-allowed;
+}
+
+:host-context(.dark-theme) body, // 如果使用:host-context来定位到上下文
+body.dark-mode {
+  // 或者直接用.dark-mode类来定位到暗黑模式下的body
+  background-color: #003f05; // 整体背景设置为深色
+}
+
+:host-context(.dark-theme) .finance-report {
+  background-color: #003f05;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+
+  .finance-report-box {
+    background-color: rgb(158, 158, 158);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .finance-report-box span {
+    color: #242323;
+    font-size: 26px;
+    width: 90%;
+  }
+
+  .header {
+    background-color: #003f05;
+    color: #333;
+    text-align: center;
+    padding: 10px 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    position: relative;
+    width: 100%;
+    font-size: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+  }
+
+  .income-item,
+  .expense-item {
+    background-color: #555;
+  }
+
+  .income-date,
+  .expense-date {
+    color: #ccc;
+  }
+
+  .left-container,
+  .right-container {
+    background-color: #2d2d2d;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .view-statistics-button {
+    background-color: #555;
+    color: #fff;
+    padding: 30px 60px;
+    font-size: 30px;
+  }
+
+  .view-statistics-button:hover {
+    background-color: #777;
+  }
+
+  .save-button-container {
+    background-color: #242323;
+  }
+
+  /* Dark mode styles */
+  .sort-dropdown button {
+    background-color: #444;
+    color: #fff;
+  }
+
+  .sort-options {
+    background-color: #333;
+  }
+
+  .sort-options div {
+    color: #fff;
+  }
+
+  .sort-options div:hover {
+    background-color: #555;
+  }
+
+  .finance-report {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .finance-report .header {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .finance-report .back-button {
+    background-color: #555;
+    color: #fff;
+  }
+
+  .finance-report .back-button:hover {
+    background-color: #777;
+  }
+
+  .finance-report h1,
+  .finance-report h2 {
+    color: #fff;
+  }
+
+  .import-button {
+    background-color: #555;
+    color: #fff;
+    padding: 20px 50px;
+    font-size: 30px;
+  }
+
+  .import-button:hover {
+    background-color: #777;
+  }
+
+  .import-button::after {
+    background-color: #2ecc71;
+  }
+
+  .view-graph-button {
+    background-color: #555;
+    color: #fff;
+    padding: 30px 60px;
+    font-size: 30px;
+  }
+
+  .view-graph-button:hover {
+    background-color: #777;
+  }
+
+  .statistics {
+    background-color: #555;
+  }
+
+  .import-button:disabled,
+  .view-graph-button:disabled {
+    background-color: #444;
+    color: #666;
+  }
+
+  .regenerate-button {
+    background-color: #555;
+    color: #fff;
+    padding: 30px 60px;
+    font-size: 30px;
+  }
+
+  .regenerate-button:hover {
+    background-color: #777;
+  }
+
+  h1 {
+    color: #fff;
+    margin-bottom: 60px;
+  }
+
+  .button-container {
+    margin-bottom: 60px;
+    margin-top: 60px;
+  }
+
+  .result-box {
+    background-color: #444;
+    box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+  }
+
+  .result-label {
+    color: #fff;
+  }
+
+  .result-value {
+    color: #ccc;
+  }
+}

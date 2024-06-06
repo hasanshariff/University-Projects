@@ -1,0 +1,125 @@
+<body>
+  <div class="finance-report" [ngClass]="{ 'dark-mode': isDarkMode, 'large-text': isLargeText }">
+    <header class="header">
+      <h1>FINANCIAL MANAGEMENT</h1>
+      <div class="header-buttons">
+        <a class="back-button" onclick="window.history.back();"><span>&larr; Back</span></a>
+      </div>
+    </header>
+    <div class="content">
+      <div class="finance-report-box">
+        <span>Finance Report</span>
+        <div class="regenerate-icon" (click)="showRegenerateConfirmation()">&#10006;</div>
+      </div>
+      <div class="button-container">
+        <label class="import-button">
+          <span>Import Income</span>
+          <input type="file" (change)="onIncomeFileSelected($event)" accept=".json" #incomeInput />
+        </label>
+        <label class="import-button">
+          <span>Import Expense</span>
+          <input type="file" (change)="onExpenseFileSelected($event)" accept=".json" #expenseInput />
+        </label>
+        <button class="view-graph-button" (click)="scrollToGraph()">View Graph</button>
+        <button class="view-statistics-button" (click)="scrollToStatistics()">View Statistics</button>
+      </div>
+      <div id="financeReport" class="lineChartContainer">
+        <div>
+          <canvas #combinedChart width="400" height="200"></canvas>
+        </div>
+        <div class="result-container">
+          <div class="result-box">
+            <div class="result-item">
+              <span class="result-label">Total Income Amount:</span>
+              <span class="income-value">{{ totalIncome | currency: currencyCode:'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Total Expense Amount:</span>
+              <span class="expense-value">{{ totalExpense | currency: currencyCode:'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
+          <div class="result-box">
+            <div class="result-item">
+              <span class="result-label">Most profitable month: </span>
+              <span class="result-value">{{ mostProfitableMonth }}</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Profit: </span>
+              <span class="result-value">{{ mostProfitAmount | currency: currencyCode:'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
+          <div class="result-box">
+            <div class="result-item">
+              <span class="result-label">Least profitable month: </span>
+              <span class="result-value">{{ leastProfitableMonth }}</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Profit: </span>
+              <span class="result-value">{{ leastProfitAmount | currency: currencyCode:'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
+          <div class="result-box">
+            <div class="result-item">
+              <span class="result-label">Total profit: </span>
+              <span class="result-value">{{ totalProfit | currency: currencyCode:'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="statistics">
+          <div class="left-container">
+            <h2>Income:</h2>
+            <div class="sort-dropdown">
+              <button (click)="toggleSortDropdown('income')">{{ selectedIncomeSortOption }}</button>
+              <div class="sort-options" *ngIf="showIncomeSortDropdown">
+                <div (click)="sortIncomes('newest')">Newest - Oldest</div>
+                <div (click)="sortIncomes('oldest')">Oldest - Newest</div>
+                <div (click)="sortIncomes('amount-desc')">Amount (Desc)</div>
+                <div (click)="sortIncomes('amount-asc')">Amount (Asc)</div>
+                <div (click)="sortIncomes('name')">Name (A-Z)</div>
+                <div (click)="clearIncomeSorting()">Clear</div>
+              </div>
+            </div>
+            <div class="income-list">
+              <div class="income-item" *ngFor="let income of filteredIncomes">
+                <div class="item-details">
+                  <span class="income-name">{{ income.name }}</span>
+                  <span class="income-amount">{{ income.amount | currency: currencyCode:'symbol':'1.2-2' }}</span>
+                </div>
+                <span class="income-date">{{ income.date | date: 'MMM d, y' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-container">
+            <h2>Expenses:</h2>
+            <div class="sort-dropdown">
+              <button (click)="toggleSortDropdown('expense')">{{ selectedExpenseSortOption }}</button>
+              <div class="sort-options" *ngIf="showExpenseSortDropdown">
+                <div (click)="sortExpenses('newest')">Newest - Oldest</div>
+                <div (click)="sortExpenses('oldest')">Oldest - Newest</div>
+                <div (click)="sortExpenses('amount-desc')">Amount (Desc)</div>
+                <div (click)="sortExpenses('amount-asc')">Amount (Asc)</div>
+                <div (click)="sortExpenses('name')">Name (A-Z)</div>
+                <div (click)="clearExpenseSorting()">Clear</div>
+              </div>
+            </div>
+            <div class="expense-list">
+              <div class="expense-item" *ngFor="let expense of filteredExpenses">
+                <div class="item-details">
+                  <span class="expense-name">{{ expense.name }}</span>
+                  <span class="expense-amount">{{ expense.amount | currency: currencyCode:'symbol':'1.2-2' }}</span>
+                </div>
+                <span class="expense-date">{{ expense.date | date: 'MMM d, y' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="save-button-container">
+          <div class="dropdown-content">
+            <a (click)="saveReport('pdf')">Save Report</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

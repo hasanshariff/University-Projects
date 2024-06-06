@@ -1,0 +1,888 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body {
+  font-family: Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f0f0;
+  min-height: 100vh;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+.header {
+  background-color: #f8f4f0;
+  color: #333;
+  text-align: center;
+  padding: 10px 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: relative;
+  width: 100%;
+  font-size: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.header-content {
+  font-size: 50px;
+  font-weight: bold;
+  margin: 0;
+  display: flex;
+  align-items: center; /* Changed to center */
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  vertical-align: top;
+}
+
+.toggle-button {
+  margin-right: 10px;
+  height: 48px; /* Set the height to match the back button */
+  display: flex;
+  align-items: center; /* Center the toggle button content vertically */
+}
+
+.back-button {
+  text-decoration: none;
+  background-color: #006400;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 20px;
+  transition: background-color 0.3s, color 0.3s;
+  border: none;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.back-button:hover {
+  background-color: #6b6c6c;
+  color: #fff;
+}
+
+// ... existing styles ...
+
+// ... existing styles ...
+
+.expense-tracker {
+  &.large-text {
+    font-size: 1.5em;
+
+    .header {
+      h1 {
+        font-size: 1.5em;
+      }
+    }
+
+    .total-expenses-box {
+      span {
+        font-size: 1.5em;
+      }
+    }
+
+    .left-container,
+    .right-container {
+      h2 {
+        font-size: 1.5em;
+      }
+    }
+
+    .expense-box {
+      .expense-name {
+        font-size: 1.5em;
+      }
+
+      .expense-amount,
+      .expense-date {
+        font-size: 1.5em;
+      }
+    }
+
+    .chart-wrapper {
+      .chart-header {
+        h2 {
+          font-size: 1.5em;
+        }
+      }
+
+      .description {
+        font-size: 1.2em;
+      }
+    }
+
+    // Increase button sizes
+    button {
+      font-size: 1.2em;
+      padding: 12px 24px;
+    }
+
+    .text-size-toggle {
+      font-size: 1.2em;
+      width: 48px;
+      height: 48px;
+    }
+
+    .clear-data-button,
+    .clear-budget-button,
+    .remove-button,
+    .remove-file-button {
+      font-size: 1.2em;
+      width: 28px;
+      height: 28px;
+    }
+
+    .search-bar {
+      input {
+        font-size: 1.2em;
+        padding: 10px;
+      }
+
+      button {
+        font-size: 1.2em;
+        padding: 10px 20px;
+      }
+    }
+
+    .dropbtn {
+      font-size: 1.2em;
+      padding: 12px 24px;
+    }
+  }
+}
+
+.total-expenses-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.total-expenses-value {
+  color: green;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.total-expenses-box span {
+  font-size: 26px;
+}
+
+.clear-data-button {
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  position: absolute;
+  right: 10px;
+}
+
+.clear-data-button::before,
+.clear-data-button::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background-color: red;
+  transform-origin: center;
+}
+
+.clear-data-button::before {
+  transform: rotate(45deg);
+}
+
+.clear-data-button::after {
+  transform: rotate(-45deg);
+}
+
+.clear-data-button:hover::before,
+.clear-data-button:hover::after {
+  background-color: darkred;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  width: 300px; /* Adjust the width as needed */
+}
+
+.modal-content input {
+  margin-bottom: 10px;
+}
+
+.modal-content button {
+  margin: 0 5px;
+}
+
+.budget-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.budget-input {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+.remaining-budget {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.positive-budget {
+  color: green;
+}
+
+.negative-budget {
+  color: red;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+h2 {
+  font-weight: bold;
+}
+
+.clear-budget-button {
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  position: relative;
+  margin-left: 10px;
+}
+
+button[type='submit'] {
+  margin-top: 20px;
+}
+
+.clear-budget-button::before,
+.clear-budget-button::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background-color: red;
+  transform-origin: center;
+}
+
+.clear-budget-button::before {
+  transform: rotate(45deg);
+}
+
+.clear-budget-button::after {
+  transform: rotate(-45deg);
+}
+
+.clear-budget-button:hover::before,
+.clear-budget-button:hover::after {
+  background-color: darkred;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.left-container,
+.right-container {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.left-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-container button {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.button-container button:last-child {
+  margin-right: 0;
+}
+
+input[type='text'],
+input[type='number'],
+input[type='date'] {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+input[type='submit'],
+button {
+  background-color: #006400;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+input[type='submit']:hover,
+button:hover {
+  background-color: #6b6c6c;
+  color: #fff;
+}
+
+.expense-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.expense-box {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.expense-name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.expense-details {
+  display: flex;
+  align-items: center;
+}
+
+.expense-amount {
+  margin-right: 10px;
+}
+
+.expense-date {
+  color: #666;
+}
+
+.import-file {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.import-file button {
+  margin-right: 10px;
+}
+
+.no-file {
+  color: red;
+}
+
+.file-imported {
+  color: green;
+}
+
+.remove-file-button {
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  margin-left: 10px;
+  position: relative;
+}
+
+.remove-file-button::before,
+.remove-file-button::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background-color: red;
+  transform-origin: center;
+}
+
+.remove-file-button::before {
+  transform: rotate(45deg);
+}
+
+.remove-file-button::after {
+  transform: rotate(-45deg);
+}
+
+.remove-file-button:hover::before,
+.remove-file-button:hover::after {
+  background-color: darkred;
+}
+
+.sort-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.sort-dropdown button {
+  background-color: #006400;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.sort-options {
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0;
+}
+
+.sort-options div {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.sort-options div:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #006400;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.remove-button {
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  position: relative;
+}
+
+.remove-button::before,
+.remove-button::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background-color: red;
+  transform-origin: center;
+}
+
+.remove-button::before {
+  transform: rotate(45deg);
+}
+
+.remove-button::after {
+  transform: rotate(-45deg);
+}
+
+.remove-button:hover::before,
+.remove-button:hover::after {
+  background-color: darkred;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-bar button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: darkgreen;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+  background-color: #6b6c6c;
+}
+
+.statistics-section {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.chart-wrapper {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chart-header h2 {
+  font-weight: bold;
+  margin: 0;
+  font-size: 26px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.chart-container {
+  width: 100%;
+  height: 450px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.description {
+  background-color: white;
+  color: #666;
+  padding: 20px;
+  border-radius: 10px;
+  margin-left: 20px;
+  width: 300px;
+  font-size: 14px;
+}
+
+button {
+  background-color: #006400;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:focus {
+  outline: none;
+}
+
+button.rotated::after {
+  transform: rotate(90deg);
+}
+
+button:hover {
+  background-color: #6b6c6c;
+  color: #fff;
+}
+
+label[for='darkmode-toggle'] {
+  width: 120px;
+  height: 50px;
+  position: relative;
+  display: block;
+  background: #ebebeb;
+  border-radius: 30px;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+  transition: 0.3s;
+  margin-left: 20px;
+}
+
+label[for='darkmode-toggle']:after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: linear-gradient(180deg, lightgreen, darkgreen);
+  border-radius: 30px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+#darkmode-toggle {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+#darkmode-toggle:checked + label {
+  background: #242424;
+}
+
+#darkmode-toggle:checked + label:after {
+  left: 115px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+
+label[for='darkmode-toggle']:active:after {
+  width: 60px;
+}
+
+label[for='darkmode-toggle']:hover {
+  cursor: pointer;
+  background: #d0d0d0;
+}
+
+:host-context(.dark-theme) body, // 如果使用:host-context来定位到上下文
+body.dark-mode {
+  // 或者直接用.dark-mode类来定位到暗黑模式下的body
+  background-color: #003f05; // 整体背景设置为深色
+}
+
+:host-context(.dark-theme) .expense-tracker {
+  background-color: #003f05;
+  color: #fff;
+
+  .modal {
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly darker background for better visibility */
+  }
+
+  .modal-content {
+    background-color: #2d2d2d;
+    color: #fff;
+  }
+
+  .modal-content input,
+  .modal-content button {
+    background-color: #3d3d3d;
+    color: #fff;
+  }
+
+  .header {
+    background-color: #003f05;
+    color: #fff;
+    h1 {
+      color: #ffffff; // 头部标题颜色
+    }
+  }
+
+  .back-button {
+    background-color: #2d2d2d;
+    color: #fff;
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.4), inset 0px -2px 5px rgba(255, 255, 255, 0.1);
+  }
+
+  .back-button:hover {
+    background-color: #3d3d3d;
+    color: #fff;
+  }
+
+  .total-expenses-box {
+    background-color: #2d2d2d;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .total-expenses-value {
+    color: green; /* Green color adjusted for better visibility in dark mode */
+  }
+
+  .expense-box {
+    background-color: #444;
+    color: #fff;
+  }
+
+  .expense-date {
+    color: #ccc;
+  }
+
+  input[type='text'],
+  input[type='number'],
+  input[type='date'] {
+    background-color: #555;
+    color: #fff;
+    border-color: #444;
+  }
+
+  .search-bar input {
+    background-color: #555;
+    color: #fff;
+    border-color: #444;
+  }
+
+  input[type='submit'],
+  button {
+    background-color: #555;
+    color: #fff;
+  }
+
+  input[type='submit']:hover,
+  button:hover {
+    background-color: #777;
+  }
+
+  .remove-button {
+    color: #ff6666;
+  }
+
+  .remove-button:hover {
+    color: #ff3333;
+  }
+
+  .chart-wrapper {
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .chart-header h2 {
+    color: #fff;
+  }
+
+  .description {
+    background-color: #555;
+    color: #fff;
+  }
+
+  .left-container,
+  .right-container {
+    background-color: #2d2d2d;
+  }
+}

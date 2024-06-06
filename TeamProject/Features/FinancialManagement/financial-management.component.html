@@ -1,0 +1,24 @@
+<body>
+  <div class="container" [ngClass]="{ 'dark-mode': isDarkMode, 'large-text': isLargeText }">
+    <div *ngIf="showParentUI">
+      <header class="header">
+        <h1>FINANCIAL MANAGEMENT</h1>
+        <div class="header-buttons">
+          <a class="back-button" onclick="window.history.back();"><span>&larr; Back</span></a>
+        </div>
+      </header>
+      <div class="menu-box">
+        <div class="menu-button">
+          <ul>
+            <li><a routerLink="expense-tracker" data-number="1">Expense Tracker</a></li>
+            <li><a routerLink="income-tracker" data-number="2">Income Tracker</a></li>
+            <li><a routerLink="finance-report" data-number="3">Finance Report</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</body>
